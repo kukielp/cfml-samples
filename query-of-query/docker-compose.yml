@@ -1,0 +1,15 @@
+lucee:
+  image: lucee/lucee:5.3-nginx
+  environment:
+    - VIRTUAL_HOST=lucee-dockerfiles.*
+    - DNS_DATABASE=${DNS_DATABASE}
+    - NAME_DATABASE=${NAME_DATABASE}
+    - UN_DATABASE=${UN_DATABASE}
+    - PW_DATABASE=${PW_DATABASE}
+  volumes:
+    - /Users/paulk/workspace/cfml/cfml-samples/query-of-query/www:/var/www
+  ports: 
+    - "8888:8888"
+    - "80:80"
+  extra_hosts:
+    - "postgres.kukiel.local:192.168.1.220"

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cfml-qoq-sample-deployment
+spec:
+  selector:
+    matchLabels:
+      app: cfml-qoq-sample
+  replicas: 1 
+  template:
+    metadata:
+      labels:
+        app: cfml-qoq-sample
+    spec:
+      containers:
+      - name: cfml-qoq-sample
+        image: registry.gitlab.com/kukielp/cfml:sample
+        ports:
+        - containerPort: 8888
+        env:
+          - name: virtualhost
+            value: "cfml-sample"
+        imagePullPolicy: Always
+      hostAliases:
+        - ip: "192.168.1.220"
+          hostnames:
+          - "postgres.kukiel.local"
+      imagePullSecrets:
+        - name: regcred
+    
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cfml-qoq-sample
+spec:
+  ports:
+    - name: client
+      protocol: TCP
+      port: 80
+      targetPort: 8888    
+  selector:
+    app: cfml-qoq-sample
+  type: LoadBalancer
