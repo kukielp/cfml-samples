@@ -2,7 +2,7 @@ Running on k8's
 <cfscript>
     writeDump(application);
 </cfscript>
-<cfquery name="dataset" datasource="pg-sample" result="meta" >
+<cfquery name="dataset" result="meta" >
     select      name, city, zipcode
     from        address_book
 </cfquery>

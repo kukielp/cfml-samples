@@ -1,4 +1,4 @@
-FROM lucee/lucee:5.3-nginx
+FROM ortussolutions/commandbox:latest
 
 # Code
-COPY www/ /var/www
+COPY www/ /app

@@ -1,7 +1,7 @@
 component {
     this.name = "cfml-sample-QoQ";
 
-    this.datasources["pg-sample"] = {
+    this.datasources[this.name] = {
         type: 'PostgreSQL'
         , host: server.system.environment.DNS_DATABASE
         , database: server.system.environment.NAME_DATABASE
@@ -10,9 +10,14 @@ component {
         , port: 5432
     };
 
-    this.defaultdatasource = "pg-samples"
+    this.defaultdatasource = this.name;
 
     boolean function onRequestStart(string targetPage) {
+        writeDump(this);
        return true;
    }
+
+    void function onApplicationStart(struct application) {
+      include "setup.cfm";
+    }
 }

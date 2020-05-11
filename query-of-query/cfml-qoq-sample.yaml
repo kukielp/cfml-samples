@@ -1,25 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cfml-qoq-sample-deployment
+  name: cfml-qoq-sample-deployment-cf2018
 spec:
   selector:
     matchLabels:
-      app: cfml-qoq-sample
+      app: cfml-qoq-sample-cf2018
   replicas: 1 
   template:
     metadata:
       labels:
-        app: cfml-qoq-sample
+        app: cfml-qoq-sample-cf2018
     spec:
       containers:
-      - name: cfml-qoq-sample
-        image: registry.gitlab.com/kukielp/cfml:sample
+      - name: cfml-qoq-sample-cf2018
+        image: registry.gitlab.com/kukielp/cfml:samplecb
         ports:
-        - containerPort: 8888
+        - containerPort: 8080
         env:
-          - name: virtualhost
-            value: "cfml-sample"
+          - name: CFENGINE
+            value: adobe@2018
+          - name: UN_DATABASE
+            value: "postgres"
+          - name: PW_DATABASE
+            value: "Test123#"
+          - name: DNS_DATABASE
+            value: "postgres.kukiel.local"
+          - name: NAME_DATABASE
+            value: "sample"
         imagePullPolicy: Always
       hostAliases:
         - ip: "192.168.1.220"
@@ -27,18 +35,17 @@ spec:
           - "postgres.kukiel.local"
       imagePullSecrets:
         - name: regcred
-    
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: cfml-qoq-sample
+  name: cfml-qoq-sample-cf2018
 spec:
   ports:
     - name: client
       protocol: TCP
       port: 80
-      targetPort: 8888    
+      targetPort: 8080   
   selector:
-    app: cfml-qoq-sample
+    app: cfml-qoq-sample-cf2018
   type: LoadBalancer

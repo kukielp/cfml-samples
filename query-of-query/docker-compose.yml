@@ -1,15 +1,23 @@
-lucee:
-  image: lucee/lucee:5.3-nginx
-  environment:
-    - VIRTUAL_HOST=lucee-dockerfiles.*
-    - DNS_DATABASE=${DNS_DATABASE}
-    - NAME_DATABASE=${NAME_DATABASE}
-    - UN_DATABASE=${UN_DATABASE}
-    - PW_DATABASE=${PW_DATABASE}
-  volumes:
-    - /Users/paulk/workspace/cfml/cfml-samples/query-of-query/www:/var/www
-  ports: 
-    - "8888:8888"
-    - "80:80"
-  extra_hosts:
-    - "postgres.kukiel.local:192.168.1.220"
+version: '3'
+services:
+  postgres:
+    image: postgres:latest
+    ports: 
+      - "5432:5432"
+    container_name: database
+    environment:
+      - POSTGRES_PASSWORD=password
+  lucee:
+    image: lucee/lucee:5.3-nginx
+    depends_on:
+      - postgres
+    environment:
+      - DNS_DATABASE=database
+      - NAME_DATABASE=postgres
+      - UN_DATABASE=postgres
+      - PW_DATABASE=password
+    volumes:
+      - ./www:/var/www
+    ports: 
+      - "8852:8888"
+      - "8052:80"
