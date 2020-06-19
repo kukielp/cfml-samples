@@ -1,0 +1,50 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  cfml-select-example
+Globals:
+  Function:
+    Timeout: 20   
+Resources:
+  CFMLSelectFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: com.foundeo.fuseless.StreamLambdaHandler
+      CodeUri: ./build/distributions/cfml-demo.zip
+      Runtime: java8
+      Timeout: 20
+      MemorySize: 3008
+      Events:
+        GetResource:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: any
+      Environment:
+        Variables:
+          FELIX_CACHE_BUFSIZE: 16384
+          DB_USERNAME: '{{resolve:ssm:/cfml/databaseusername:1}}'
+          DB_PASSWORD: '{{resolve:ssm:/cfml/databasepassword:1}}'
+          DB_CONNECTION_STRING: '{{resolve:ssm:/cfml/databaseconnectionstring:1}}'
+      VpcConfig:
+        SecurityGroupIds: 
+          - sg-0a81a98754a8ac6d4
+        SubnetIds: 
+          - subnet-36cdc051
+          - subnet-50360819
+          - subnet-50360819
+    
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  CFMLSelectApi:
+    Description: "API Gateway endpoint URL for Prod stage for CFML Select function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+  CFMLSelectFunction:
+    Description: "CFML Lambda Function ARN"
+    Value: !GetAtt CFMLSelectFunction.Arn
+  CFMLSelectFunctionIamRole:
+    Description: "Implicit IAM Role created for CFML Select function"
+    Value: !GetAtt CFMLSelectFunctionRole.Arn

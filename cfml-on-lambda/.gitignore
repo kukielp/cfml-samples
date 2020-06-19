@@ -1,0 +1,5 @@
+build/
+jars/*.jar
+.gradle
+.DS_Store
+samconfig.toml

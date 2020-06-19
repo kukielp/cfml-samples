@@ -3,11 +3,11 @@ component {
 
     this.datasources[this.name] = {
         type: 'PostgreSQL'
-        , host: server.system.environment.DNS_DATABASE
-        , database: server.system.environment.NAME_DATABASE
-        , username: server.system.environment.UN_DATABASE
-        , password: server.system.environment.PW_DATABASE
-        , port: 5432
+        , host: '192.168.1.220'
+        , database: 'posts'
+        , username: 'root'
+        , password: ''
+        , port: 26258
     };
 
     this.defaultdatasource = this.name;

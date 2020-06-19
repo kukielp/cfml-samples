@@ -2,22 +2,31 @@ version: '3'
 services:
   postgres:
     image: postgres:latest
+    networks:
+      flat:
+        aliases:
+          - database
     ports: 
-      - "5432:5432"
-    container_name: database-cfml
+      - "3543:3542"
+    container_name: database
     environment:
       - POSTGRES_PASSWORD=password
   lucee:
     image: lucee/lucee:5.3-nginx
+    networks:
+      - flat
     depends_on:
       - postgres
     environment:
       - DNS_DATABASE=database
       - NAME_DATABASE=postgres
       - UN_DATABASE=postgres
-      - PW_DATABASE=password
+      - PW_DATABASE=
     volumes:
       - ./www:/var/www
     ports: 
       - "8852:8888"
       - "8052:80"
+networks:
+  flat:
+    driver: bridge

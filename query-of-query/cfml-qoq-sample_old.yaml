@@ -1,0 +1,52 @@
+version: '3.3'
+
+services:
+  web:
+    image: ortussolutions/commandbox:latest
+    environment:
+      - VIRTUAL_HOST=lucee-dockerfiles.*
+      - DNS_DATABASE=${DNS_DATABASE}
+      - NAME_DATABASE=${NAME_DATABASE}
+      - UN_DATABASE=${UN_DATABASE}
+      - PW_DATABASE=${PW_DATABASE}
+    ports:
+      - "8080:8080"
+    volumes:
+      - /Users/paulk/workspace/cfml/cfml-samples/query-of-query/www:/app
+    environment:
+      - PORT=8080
+      - CFENGINE=adobe@2018
+      - cfconfig_adminPassword=admin123
+      - VIRTUAL_HOST=lucee-dockerfiles.*
+      - DNS_DATABASE=${DNS_DATABASE}
+      - NAME_DATABASE=${NAME_DATABASE}
+      - UN_DATABASE=${UN_DATABASE}
+      - PW_DATABASE=${PW_DATABASE}
+    extra_hosts:
+      - "postgres.kukiel.local:192.168.1.220"
+
+
+
+      lucee:
+        image: lucee/lucee:5.3-nginx
+        environment:
+          - VIRTUAL_HOST=lucee-dockerfiles.*
+          - DNS_DATABASE=${DNS_DATABASE}
+          - NAME_DATABASE=${NAME_DATABASE}
+          - UN_DATABASE=${UN_DATABASE}
+          - PW_DATABASE=${PW_DATABASE}
+        volumes:
+          - /Users/paulk/workspace/kukielp/lucee/ready/www:/var/www
+        ports: 
+          - "8852:8888"
+          - "8052:80"
+        extra_hosts:
+          - "postgres.kukiel.local:192.168.1.220"
+
+
+
+
+          FROM lucee/lucee:5.3-nginx
+
+# Code
+COPY www/ /var/www

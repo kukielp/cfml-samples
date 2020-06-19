@@ -6,6 +6,7 @@
         "zipcode" text,
         PRIMARY KEY( id )
     );
+    truncate address_book;
     insert into address_book ( name, city, zipcode ) values ( 'Ron', 'Boston', '02134' );
     insert into address_book ( name, city, zipcode ) values ( 'Mike', 'Boston', '02134' );
     insert into address_book ( name, city, zipcode ) values ( 'Ron', 'Medford', '02155' );
