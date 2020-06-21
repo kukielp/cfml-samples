@@ -1,0 +1,6 @@
+build/
+.gradle
+.DS_Store
+samconfig.toml
+jars/*.jar
+jars/*.zip

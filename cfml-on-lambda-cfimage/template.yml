@@ -1,0 +1,40 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  cfml-lambda-cfimage
+Globals:
+  Function:
+    Timeout: 20   
+Resources:
+  CFMLCFImageFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: com.foundeo.fuseless.StreamLambdaHandler
+      CodeUri: ./build/distributions/cfml-lambda-cfimage.zip
+      Runtime: java8
+      Timeout: 20
+      MemorySize: 3008
+      Events:
+        GetResource:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: any
+      Environment:
+        Variables:
+          FELIX_CACHE_BUFSIZE: 16384
+          LUCEE_EXTENSIONS: 'B737ABC4-D43F-4D91-8E8E973E37C40D1B;name=cfimage;version=1.0.0.35,17AB52DE-B300-A94B-E058BD978511E39E;name=cfs3;version=0.9.4.122'
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  CFMLCFImageApi:
+    Description: "API Gateway endpoint URL for Prod stage for CFML Select function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+  CFMLCFImageFunction:
+    Description: "CFML Lambda Function ARN"
+    Value: !GetAtt CFMLCFImageFunction.Arn
+  CFMLCFImageFunctionIamRole:
+    Description: "Implicit IAM Role created for CFML CFImage function"
+    Value: !GetAtt CFMLCFImageFunctionRole.Arn
