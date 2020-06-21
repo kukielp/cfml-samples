@@ -23,7 +23,7 @@ Resources:
       Environment:
         Variables:
           FELIX_CACHE_BUFSIZE: 16384
-          LUCEE_EXTENSIONS: 'B737ABC4-D43F-4D91-8E8E973E37C40D1B;name=cfimage;version=1.0.0.35,17AB52DE-B300-A94B-E058BD978511E39E;name=cfs3;version=0.9.4.122'
+          LUCEE_EXTENSIONS: 'B737ABC4-D43F-4D91-8E8E973E37C40D1B;name=cfimage;version=1.0.0.35'
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function

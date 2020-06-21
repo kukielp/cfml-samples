@@ -24,7 +24,11 @@ Then run:
 
 This will build the app ( you'll need java and gradle and AWS Sam installed ) and begin a guided depolyment with SAM.
 
+You may notice it's a bit slow to start up, thats due to lucee downaloading and installing the cfimage extention.  Libe 26 of template.yml shows hwo we tell lucee the extention to install:
 ```
+            LUCEE_EXTENSIONS: 'B737ABC4-D43F-4D91-8E8E973E37C40D1B;name=cfimage;version=1.0.0.35'
+```
+The extention ID can be found here: [https://download.lucee.org/](https://download.lucee.org/)
 CloudFormation outputs from deployed stack
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Outputs
