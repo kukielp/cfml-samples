@@ -1,5 +1,11 @@
 # FuseLess with cfimage
 
+## Requirements
+- Java
+- Gradle: [https://gradle.org/](https://gradle.org/)
+- SAM: [SAM](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/what-is-sam.html)
+- An AWS Account [AWS}(https://aws.amazon.com/)]
+
 From here you are ready to deploy to AWS lambda a CFML serice that can resize an image.
 
 Clone this repo and run:
